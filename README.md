@@ -75,4 +75,4 @@ MIT License — 詳細は [LICENSE](LICENSE) を参照。
 - [Hermes Agent](https://github.com/NousResearch/hermes-agent) by Nous Research
 - [vecmemori](https://github.com/iwaan10000vr/vecmemori) by iwaan10000vr
 - [ruri-v3](https://huggingface.co/cl-nagoya/ruri-v3-310m) by cl-nagoya
-- [葦澤かもめ](https://note.com/ashizawakamome) — 比喩表現スキル（metaphor-craft）の設計・提供
+- [葦澤かもめ](https://note.com/ashizawakamome) — 比喩表現などSKILL.md設計の参考
