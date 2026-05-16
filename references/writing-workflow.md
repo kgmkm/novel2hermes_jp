@@ -18,6 +18,7 @@ read_file("plot/第1章.md")
 # Step 2: シーン設計の再確認
 # plot/*.md のシーンテンプレート（場所・時間・視点・演出・キー台詞）を確認
 # 不足があればここで補完する
+# references/metaphor-guide.md, references/sensory-rotation.md を必要に応じて読み込む
 
 # Step 3: vecmemori で高速検索・補完
 session_search(query="作品タイトル 執筆")       # 前回セッション確認

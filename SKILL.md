@@ -1,7 +1,7 @@
 ---
 name: novel2hermes_jp
 description: Use when the user wants to plan, write, or manage a Japanese novel project with Hermes Agent + vecmemori memory. Covers fantasy, SF, mystery, romance, and all genres. Load this skill when the user mentions novel writing, character design, worldbuilding, plot planning, or wants to continue a novel project.
-version: 2.2.0
+version: 2.3.0
 tags: [novel, writing, creative, japanese, vecmemori, fiction]
 ---
 
@@ -153,6 +153,8 @@ proposal.md 作成後、ユーザに内容を確認し承認を得てから次�
 | references/character-template.md | キャラ詳細仕様書テンプレート（A〜F、36項目） | 1-3 実行時 |
 | references/planning-workflow.md | 企画フェーズ詳細（1-2〜1-7）+ シーンテンプレート + 伏線管理 | 1-2 以降実行時 |
 | references/writing-workflow.md | 執筆フェーズ詳細（2-1〜2-3） | 2-1 実行時 |
+| references/metaphor-guide.md | 比喩ガイド最小版（密度・配置・罠・セルフチェック） | 執筆時任意 |
+| references/sensory-rotation.md | 五感ローテーションガイド | 執筆時任意 |
 | references/fact-store-reference.md | vecmemori 操作リファレンス・全アクション表 | fact_store 操作時 |
 | references/vecmemori-setup.md | vecmemori セットアップ手順（5ステップ） | 初回セットアップ時 |
 
