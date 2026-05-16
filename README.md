@@ -21,11 +21,17 @@ Hermes Agent + vecmemori で日本語小説を企画・執筆するためのス�
 
 ### インストール
 
-```bash
-# リポジトリをクローン
-git clone https://github.com/kgmkm/novel2hermes_jp.git
+インストール済みの Hermes Agent に、このリポジトリのURLを伝えるだけです：
 
-# Hermes の skills ディレクトリにシンボリックリンク
+```
+以下のGitHubリポジトリをスキルとしてインストールしてください：
+https://github.com/kgmkm/novel2hermes_jp
+```
+
+Hermes Agent がリポジトリの取得から配置までを自動で行います。手動で行う場合は以下：
+
+```bash
+git clone https://github.com/kgmkm/novel2hermes_jp.git
 ln -sf "$(pwd)/novel2hermes_jp" ~/.hermes/skills/novel2hermes_jp
 ```
 
@@ -69,3 +75,4 @@ MIT License — 詳細は [LICENSE](LICENSE) を参照。
 - [Hermes Agent](https://github.com/NousResearch/hermes-agent) by Nous Research
 - [vecmemori](https://github.com/iwaan10000vr/vecmemori) by iwaan10000vr
 - [ruri-v3](https://huggingface.co/cl-nagoya/ruri-v3-310m) by cl-nagoya
+- [葦澤かもめ](https://note.com/ashizawakamome) — 比喩表現スキル（metaphor-craft）の設計・提供

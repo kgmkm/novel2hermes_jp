@@ -161,7 +161,7 @@ memory(action="add", target="memory",
 
 ```python
 write_file(path="AGENTS.md", content="""# 作品ガイド
-（文体規則・禁止事項・シリーズ全体の注意点）
+（文体規則・禁止事項・シリーズ全体の注意点。キャラ初出時はふりがなを添えること）
 ...""")
 ```
 
