@@ -15,14 +15,18 @@ read_file("character/02-01-美咲_覚醒前.md")
 read_file("plot/第1章.md")
 # ... 必要なファイルをすべて読み込む
 
-# Step 2: vecmemori で高速検索・補完
+# Step 2: シーン設計の再確認
+# plot/*.md のシーンテンプレート（場所・時間・視点・演出・キー台詞）を確認
+# 不足があればここで補完する
+
+# Step 3: vecmemori で高速検索・補完
 session_search(query="作品タイトル 執筆")       # 前回セッション確認
 fact_store(action="search", query="世界観 設定")  # 世界観
 fact_store(action="probe", entity="桜井美咲")     # キャラ情報
 fact_store(action="search", query="pid=001 sid=02")  # 章またぎ子レコード
 fact_store(action="search", query="第1章 プロット 展開")  # プロット
 
-# Step 3: 整合性チェック
+# Step 4: 整合性チェック
 # .md と vecmemori の間に大きな乖離がないか確認
 # 乖離があればユーザに通知: .md の内容で vecmemori を更新しますか？
 fact_store(action="contradict", statement="確認したい命題")

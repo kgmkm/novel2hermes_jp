@@ -1,7 +1,7 @@
 ---
 name: novel2hermes_jp
 description: Use when the user wants to plan, write, or manage a Japanese novel project with Hermes Agent + vecmemori memory. Covers fantasy, SF, mystery, romance, and all genres. Load this skill when the user mentions novel writing, character design, worldbuilding, plot planning, or wants to continue a novel project.
-version: 2.1.0
+version: 2.2.0
 tags: [novel, writing, creative, japanese, vecmemori, fiction]
 ---
 
@@ -127,7 +127,7 @@ proposal.md 作成後、ユーザに内容を確認し承認を得てから次�
 |----------|-------------------|
 | ファンタジー | 魔法・種族・世界法則を `category="worldbuilding"` で厳密管理 |
 | SF | テクノロジー設定・時系列整合性を `contradict` でチェック |
-| ミステリ | 伏線・手がかり・アリバイを `category="plot"` で管理、矛盾検出が最重要 |
+| ミステリ | 伏線・手がかり・アリバイを `category="foreshadowing"` で管理、矛盾検出が最重要 |
 | 恋愛・青春 | キャラ間関係性を `reason` で横断検索、感情変化を時系列追跡 |
 
 ## 参照ファイル一覧
@@ -137,7 +137,7 @@ proposal.md 作成後、ユーザに内容を確認し承認を得てから次�
 | ファイル | 内容 | 読込タイミング |
 |----------|------|---------------|
 | references/character-template.md | キャラ詳細仕様書テンプレート（A〜F、36項目） | 1-3 実行時 |
-| references/planning-workflow.md | 企画フェーズ詳細（1-2〜1-7） | 1-2 以降実行時 |
+| references/planning-workflow.md | 企画フェーズ詳細（1-2〜1-7）+ シーンテンプレート + 伏線管理 | 1-2 以降実行時 |
 | references/writing-workflow.md | 執筆フェーズ詳細（2-1〜2-3） | 2-1 実行時 |
 | references/fact-store-reference.md | vecmemori 操作リファレンス・全アクション表 | fact_store 操作時 |
 | references/vecmemori-setup.md | vecmemori セットアップ手順（5ステップ） | 初回セットアップ時 |
