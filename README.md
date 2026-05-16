@@ -1,0 +1,71 @@
+# novel2hermes_jp
+
+Hermes Agent + vecmemori で日本語小説を企画・執筆するためのスキルセットです。
+
+## 特徴
+
+- **企画 → 執筆の2フェーズ構成** — 企画と執筆を混在させず、プロの編集者＋小説家の分業体制を再現
+- **高解像度キャラクターシート** — 36項目の詳細テンプレート。ComfyUI 等の画像生成 AI との連携を前提とした設計
+- **vecmemori による永続記憶** — FTS5 + ニューラル埋め込み（ruri-v3）で日本語セマンティック検索。キャラ・世界観・伏線・プロットを検索・矛盾検出
+- **親子レコード管理** — 章またぎの設定変化（成長・悪堕ち・所属変更）を強リレーションで追跡
+- **デュアルストレージ** — .md ファイル（人間の正規原典）+ vecmemori（AI の高速検索インデックス）
+- **完全ローカル・無料** — API キー不要、外部サーバー不要
+- **ジャンル不問** — ファンタジー、SF、ミステリ、恋愛、青春、歴史、ホラー etc.
+
+## 導入
+
+### 前提
+
+- [Hermes Agent](https://github.com/NousResearch/hermes-agent) v2.x
+- [vecmemori](https://github.com/iwaan10000vr/vecmemori) メモリプロバイダ（初期セットアップは `references/vecmemori-setup.md` 参照）
+
+### インストール
+
+```bash
+# リポジトリをクローン
+git clone https://github.com/kgmkm/novel2hermes_jp.git
+
+# Hermes の skills ディレクトリにシンボリックリンク
+ln -sf "$(pwd)/novel2hermes_jp" ~/.hermes/skills/novel2hermes_jp
+```
+
+### 起動
+
+```bash
+# 小説プロジェクトディレクトリを指定して起動
+hermes -w /path/to/novel-project/ -s novel2hermes_jp
+```
+
+## 使い方
+
+1. `hermes -s novel2hermes_jp` で起動
+2. 「企画から始めて」→ 企画フェーズ開始。proposal.md → キャラ詳細シート → 世界観 → プロットの順に作成
+3. 「第1章を書いて」→ 執筆フェーズ開始
+4. 「美咲の設定を」「伏線をチェック」「矛盾がないか確認」など、vecmemori を活用した設定管理が可能
+
+詳細は [SKILL.md](SKILL.md) を参照。
+
+## ファイル構成
+
+```
+novel2hermes_jp/
+├── SKILL.md                          ← メインスキル
+├── README.md                         ← このファイル
+├── LICENSE                           ← MIT
+└── references/                       ← 必要時のみ読み込み
+    ├── character-template.md         ← キャラ詳細仕様書テンプレート
+    ├── planning-workflow.md          ← 企画フェーズ詳細
+    ├── writing-workflow.md           ← 執筆フェーズ詳細
+    ├── fact-store-reference.md       ← vecmemori 操作リファレンス
+    └── vecmemori-setup.md            ← セットアップ手順
+```
+
+## ライセンス
+
+MIT License — 詳細は [LICENSE](LICENSE) を参照。
+
+## 謝辞
+
+- [Hermes Agent](https://github.com/NousResearch/hermes-agent) by Nous Research
+- [vecmemori](https://github.com/iwaan10000vr/vecmemori) by iwaan10000vr
+- [ruri-v3](https://huggingface.co/cl-nagoya/ruri-v3-310m) by cl-nagoya

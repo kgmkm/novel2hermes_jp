@@ -23,7 +23,6 @@ tags: [novel, writing, creative, japanese, vecmemori, fiction]
 
 - ユーザが「小説を書きたい」「企画から始めて」「第N章を書いて」と指示
 - キャラクター設定・世界観構築・プロット作成の依頼
-- vecmemori を使った小説設定管理の質問
 - ComfyUI 等でのキャラクター画像生成を前提とした設計
 
 ## メモリアーキテクチャ（4層）
