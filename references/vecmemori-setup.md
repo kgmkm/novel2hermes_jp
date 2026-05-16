@@ -1,13 +1,11 @@
 # vecmemori セットアップ手順
 
-## Step 1: リポジトリのクローンとインストール
+## Step 1: クローンとインストール
 
 ```bash
 cd ~
 git clone https://github.com/iwaan10000vr/vecmemori.git
 cd vecmemori
-
-# Hermes Agent の venv にインストール
 uv pip install -e ".[hermes,ja]" --python ~/.hermes/hermes-agent/venv/bin/python3
 ```
 
@@ -46,17 +44,16 @@ hermes config set plugins.vecmemori.retrieval_planner false
 
 ```bash
 hermes memory status
-# → Provider: vecmemori, Status: available ✓
+# Provider: vecmemori, Status: available
 ```
 
 ## 技術詳細
 
 | 項目 | 値 |
 |------|-----|
-| メモリプロバイダ | vecmemori |
+| プロバイダ | vecmemori |
 | 検索方式 | FTS5 (0.40) + ニューラル埋め込み (0.60) |
 | 埋め込みモデル | cl-nagoya/ruri-v3-310m (768次元, ~1.2GB) |
-| 日本語分かち書き | fugashi + MeCab + UniDic |
+| 分かち書き | fugashi + MeCab + UniDic |
 | ストレージ | SQLite（ローカル） |
 | ライセンス | MIT |
-| GitHub | https://github.com/iwaan10000vr/vecmemori |

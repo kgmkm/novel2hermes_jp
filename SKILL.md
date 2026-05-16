@@ -63,7 +63,7 @@ hermes -w /mnt/y/novel/{プロジェクト名}/ -s novel2hermes
 | Step | 内容 | 詳細 |
 |------|------|------|
 | 1-1 | proposal.md 作成 + ディレクトリ準備 | SKILL.md 内 |
-| 1-2 | **キャラクター詳細仕様書**（最重要） | [参照: character-template.md](references/character-template.md) |
+| 1-2 | キャラクター詳細仕様書（最重要） | [参照: character-template.md](references/character-template.md) |
 | 1-3 | 世界観保存（vecmemori + .md） | [参照: planning-workflow.md](references/planning-workflow.md) |
 | 1-4 | キャラ情報保存（親子レコード管理） | 同上 |
 | 1-5 | プロット保存 | 同上 |
