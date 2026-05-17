@@ -17,7 +17,7 @@ Hermes Agent + vecmemori で日本語小説を企画・執筆するためのス�
 ### 前提
 
 - [Hermes Agent](https://github.com/NousResearch/hermes-agent) v2.x
-- [vecmemori](https://github.com/iwaan10000vr/vecmemori) メモリプロバイダ（初期セットアップは `references/vecmemori-setup.md` 参照）
+- [vecmemori](https://github.com/iwaan10000vr/vecmemori) メモリプロバイダ（初期セットアップは `references/project-init.md` 参照）
 
 ### インストール
 
@@ -63,7 +63,7 @@ novel2hermes_jp/
     ├── planning-workflow.md          ← 企画フェーズ詳細
     ├── writing-workflow.md           ← 執筆フェーズ詳細
     ├── fact-store-reference.md       ← vecmemori 操作リファレンス
-    └── vecmemori-setup.md            ← セットアップ手順
+    └── project-init.md               ← プロジェクト初期化ガイド
 ```
 
 ## ライセンス
