@@ -16,6 +16,14 @@ Hermes Agent + vecmemori で日本語小説を企画・執筆するためのス�
 
 [【小説】妖狐は、嗤う](https://note.com/kagami_kami/n/n4a2a7b9f0d38) note.com 約18,000字 4章構成
 
+```
+企画・執筆・ディレクションLLM: opencode/deepseek-v4-pro
+推敲LLM: opencode/mimo-v2.5-pro, opencode/glm-5.1, nous-portal/deepseek-v4-flash
+挿絵画像生成ツール: ComfyUI + anima_v10
+表紙画像生成ツール: hailuo + GPT-Image-2 
+プロンプト生成・画像推敲LLM: opencode/qwen3.6-plus
+```
+
 ## 導入
 
 ### 前提
