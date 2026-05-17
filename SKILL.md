@@ -9,11 +9,6 @@ tags: [novel, writing, creative, japanese, vecmemori, fiction, illustration, ima
 
 This skill provides a framework for planning and writing Japanese novels using Hermes Agent with vecmemori memory.
 
-## Quick Reference
-
-- Full skill content: `/mnt/y/novel/skills/novel2hermes/SKILL.md`
-- GitHub repo: https://github.com/kgmkm/novel2hermes_jp
-
 ## Key Workflow
 
 1. **企画フェーズ**: proposal → worldbuilding → character design → plot
