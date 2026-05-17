@@ -14,7 +14,7 @@ Hermes Agent + vecmemori で日本語小説を企画・執筆するためのス�
 
 ## 作例
 
-[【小説】妖狐は、嗤う](https://note.com/kagami_kami/n/n4a2a7b9f0d38)
+[【小説】妖狐は、嗤う](https://note.com/kagami_kami/n/n4a2a7b9f0d38) note.com 約18,000字 4章構成
 
 ## 導入
 
