@@ -9,7 +9,9 @@ Hermes Agent + vecmemori で日本語小説を企画・執筆するためのス�
 - **vecmemori による永続記憶** — FTS5 + ニューラル埋め込み（ruri-v3）で日本語セマンティック検索。キャラ・世界観・伏線・プロットを検索・矛盾検出
 - **親子レコード管理** — 章またぎの設定変化（成長・悪堕ち・所属変更）を強リレーションで追跡
 - **デュアルストレージ** — .md ファイル（人間の正規原典）+ vecmemori（AI の高速検索インデックス）
-- **完全ローカル・無料** — API キー不要、外部サーバー不要
+- **複数 LLM による推敲** — 論理・文体・時代考証・読者視点の 4 エージェント構成。異なる LLM を手動オーケストレーションし、単一モデルの偏向を排除
+- **挿絵の画像生成** — ComfyUI / GPT Image / Nano Banana 等に対応。シーン選定からプロンプト設計、サンプル生成→ビジョンチェック→8枚バッチ生成までの完全ガイド
+- **完全ローカル・無料** — vecmemori は API キー不要、外部サーバー不要
 - **ジャンル不問** — ファンタジー、SF、ミステリ、恋愛、青春、歴史、ホラー etc.
 
 ## 導入
@@ -18,6 +20,7 @@ Hermes Agent + vecmemori で日本語小説を企画・執筆するためのス�
 
 - [Hermes Agent](https://github.com/NousResearch/hermes-agent) v2.x
 - [vecmemori](https://github.com/iwaan10000vr/vecmemori) メモリプロバイダ（初期セットアップは `references/project-init.md` 参照）
+- **LLM プロバイダ** — Hermes Agent に最低 1 つ以上の LLM プロバイダが設定済みであること（OpenRouter, Nous Portal, Anthropic, OpenAI など）。推敲フェーズの MoA では複数プロバイダの併用を推奨（全エージェント異なる LLM が必須。詳細は `references/moa-manual-orchestration.md` 参照）
 
 ### インストール
 
@@ -59,11 +62,16 @@ novel2hermes_jp/
 ├── README.md                         ← このファイル
 ├── LICENSE                           ← MIT
 └── references/                       ← 必要時のみ読み込み
+    ├── project-init.md               ← 環境セットアップ（vecmemori + ツール有効化）
+    ├── planning-workflow.md          ← 企画フェーズ詳細（世界観→キャラ→プロット）
+    ├── writing-workflow.md           ← 執筆フェーズ詳細（ルール・時代考証・品質基準）
+    ├── revision-workflow.md          ← 推敲 3 フェーズ + MoA オーケストレーション
+    ├── moa-manual-orchestration.md   ← MoA 推奨プロバイダ + 実行コマンド
+    ├── illustration-guide.md         ← 挿絵生成ガイド（ComfyUI / 代替ツール）
     ├── character-template.md         ← キャラ詳細仕様書テンプレート
-    ├── planning-workflow.md          ← 企画フェーズ詳細
-    ├── writing-workflow.md           ← 執筆フェーズ詳細
     ├── fact-store-reference.md       ← vecmemori 操作リファレンス
-    └── project-init.md               ← プロジェクト初期化ガイド
+    ├── metaphor-guide.md             ← 比喩ガイド
+    └── sensory-rotation.md           ← 五感ローテーションガイド
 ```
 
 ## ライセンス
