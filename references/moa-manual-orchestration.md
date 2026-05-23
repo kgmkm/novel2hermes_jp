@@ -1,42 +1,21 @@
 # MoA手動オーケストレーション — 小説推敲（整合性検証 + 読者視点評価）
 
-## なぜ手動オーケストレーションか ／ 推奨プロバイダー
-
-→ **[hermes-fake-moa](https://github.com/kgmkm/hermes-fake-moa)** の README.md に移設しました。
-
-プロバイダ選定基準・推奨プロバイダー・モデル名形式の違い・組み込み moa との比較はすべて hermes-fake-moa 側を参照してください。
-
-### モデル一覧の取得
-
-**`hermes model` は対話型 TUI であり、エージェントやスクリプトから叩けない。** `hermes config` は現在選択中の1モデルのみを表示する。
-
-全モデルを非対話で取得するには hermes-fake-moa のスクリプトを使用：
-
-```bash
-python3 scripts/list-models.py > models.md
-```
-
-### モデル選定フロー
-
-1. `list-models.py > models.md` または `select-panel.py --models` で MoA 用に **異なる 2〜5 モデル** を選ぶ
-2. 選ばれたモデルで `hermes chat -q` を並列実行（または `multi-chat.py` 使用）
+**モデル管理・並列実行・例外処理・プロバイダ固有の注意点は [hermes-fake-moa](https://github.com/kgmkm/hermes-fake-moa) に集約されています。** 以下は小説推敲に特化した内容のみを記載します。
 
 ---
 
 ## 基本コマンド
 
+hermes-fake-moa の `multi-chat.py` を使う場合:
+
 ```bash
-hermes chat -q "プロンプト" -m "モデル名" --provider プロバイダ名
+python3 scripts/multi-chat.py --panel novel-revision --file prompt.txt --cwd /path/to/project
 ```
 
-### 例
+手動で `hermes chat -q` を使う場合:
 
 ```bash
-# opencode-go の mimo-v2.5-pro で論理レビュー
-hermes chat -q "全4章の論理整合性をチェックして" -m "mimo-v2.5-pro" --provider opencode-go
-
-# nous の deepseek-v4-flash で読者視点評価
-hermes chat -q "読者視点で評価して" -m "deepseek/deepseek-v4-flash" --provider nous
+hermes chat -q "プロンプト" -m "モデル名" --provider プロバイダ名 -Q --yolo --max-turns 2
 ```
 
 ## 4エージェント構成
@@ -142,41 +121,6 @@ hermes chat -q "読者視点で評価して" -m "deepseek/deepseek-v4-flash" --p
 
 ---
 
-## 並列実行
-
-3プロセスまで同時起動可能。`background=true` + `notify_on_complete=true` 推奨。
-
-```bash
-# プロセス1
-terminal(command="hermes chat -q ... -m MODEL1 --provider P1", background=true, notify_on_complete=true)
-# プロセス2
-terminal(command="hermes chat -q ... -m MODEL2 --provider P2", background=true, notify_on_complete=true)
-# プロセス3
-terminal(command="hermes chat -q ... -m MODEL3 --provider P3", background=true, notify_on_complete=true)
-```
-
----
-
-## 実装上の注意
-
-### タイムアウト回避
-
-- `delegate_task` で広範な「全チェック」指示を出すと 600s タイムアウトしやすい
-- 代わりに **TOP-5 指摘**などスコープを絞る
-- `hermes chat -q` 手動オーケストレーションでは `timeout=300` を推奨
-
-### 並列数制限
-
-- 同時起動は最大 3 プロセス。4 エージェント構成の場合は 2+2 に分割
-- バッチ1（エージェント 1, 2, 3）→ 完了後バッチ2（エージェント 4）の順次実行が安全
-
-### ファイル読み込み
-
-- 各 `hermes chat -q` 呼び出しは独立セッションのため、小説本文のファイルパスをプロンプト内で明示的に指定する必要がある
-- 長大なファイルをプロンプトに埋め込むとトークン制限に達するため、章ごとに分割して送信する
-
----
-
 ## 合議集計
 
 全エージェント完了後：
@@ -190,27 +134,3 @@ terminal(command="hermes chat -q ... -m MODEL3 --provider P3", background=true, 
 7. 最終修正リストをユーザに提示し、承認を得てから本文修正に着手する
 
 **実例**: 名前の由来改善案に「九つの尾を持ちながら」→ 設定では50年/1尾で500年前の若い妖狐は2〜4尾。矛盾検出により「いつか九つの尾を揃える日を夢見る」に修正。
-
-## 例外処理
-
-MoA実行中にLLMが以下の状態になった場合：
-
-| 現象 | 対応 |
-|------|------|
-| タイムアウト（600s） | ユーザに「どのモデル・視点・現象」を報告。代替モデル指定 or スコープ縮小を仰ぐ |
-| モデル名エラー（404等） | ユーザに正しいモデル名の確認を依頼 |
-| 調査拒否・空応答 | ユーザに報告。別モデルで再実行 |
-
-**禁止事項**: 自動リトライ、ユーザに黙ったままの代替モデル選択、エラーを無視した集計。
-
-## モデル名の注意点
-
-プロバイダごとにモデル名の表記が異なるため、事前確認が必須：
-
-| プロバイダ | モデル指定形式 | 例 |
-|------------|-------------|-----|
-| opencode-go | `モデル名`（そのまま） | `mimo-v2.5-pro` |
-| nous | `プロバイダ/モデル名` | `deepseek/deepseek-v4-flash` |
-| openrouter | `プロバイダ/モデル名` | `anthropic/claude-sonnet-4` |
-
-**404エラーが出た場合、モデル名の形式が誤っている可能性が高い。**
