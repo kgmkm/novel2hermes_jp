@@ -170,14 +170,19 @@ ComfyUI 以外を使う場合は、以下の表形式でプロンプトを提示
 
 ```python
 # ComfyUI API 経由の投入例
+# 事前準備: 必要なベース画像を upload/image で ComfyUI input にアップロード
+# curl -X POST http://localhost:8188/upload/image -F "image=@base.png"
+
 for scene_key, prompt in prompts.items():
     wf["Prompt"]["inputs"]["prompt"] = quality_prefix + ", " + prompt
     for i in range(2):
         seed = random.randint(100000000, 999999999)
-        # API 送信（client_id 必須）
+        # API 送信（client_id 必須 — raw workflow は 400）
         payload = {"prompt": wf, "client_id": str(uuid.uuid4())}
-        # 完了待ち → ダウンロード
+        # 完了待ち → history から出力ファイル名取得 → view?filename=&type= でダウンロード
 ```
+
+> **画像サイズ変更時の注意**: ワークフロー内の EmptyLatentImage や Slider2D 等のサイズ指定ノードを変更してから API 送信すること（例: 832×1216 → 1280×670）。生成後は元のサイズに戻す。
 
 ### 4-2. ビジョンチェック
 
@@ -234,7 +239,10 @@ for scene_key, prompt in prompts.items():
 
 | 問題 | 対処 |
 |------|------|
-| ComfyUI に接続できない | `curl http://localhost:8188/system_stats` で稼働確認。WSL の場合は Mirrored Networking 有効確認 |
-| API 400 `no_prompt` | ペイロードが `{"prompt": wf, "client_id": "..."}` 形式か確認（`wf` 直送りは不可） |
-| 画像ダウンロード 404 | history API で `type` を確認（`temp` / `output`）。URL の `type=` パラメータを合わせる |
-| メモリ不足 | 画像サイズを縮小、または `--lowvram` オプション |
+|| ComfyUI に接続できない | `curl http://localhost:8188/system_stats` で稼働確認。WSL の場合は Mirrored Networking 有効確認 |
+|| API 400 `no_prompt` | ペイロードが `{"prompt": wf, "client_id": "..."}` 形式か確認（`wf` 直送りは不可） |
+|| 画像ダウンロード 404 | history API で `type` を確認（`temp` / `output`）。URL の `type=` パラメータを合わせる |
+|| ベース画像がない/400 | ComfyUI の `upload/image` エンドポイントでアップロードし、ワークフローの LoadImage ノードでそのファイル名を指定する |
+|| 画像サイズを変えたい | ワークフロー内の EmptyLatentImage / Slider2D 等のノード入力（`width`, `height`）を変更。縦長(832×1216)から横長(1280×670)への変更時は `Xi/Xf` と `Yi/Yf` の両方を更新 |
+|| メモリ不足 | 画像サイズを縮小、または `--lowvram` オプション |
+|| メモリ不足 | 画像サイズを縮小、または `--lowvram` オプション |
