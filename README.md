@@ -9,7 +9,7 @@ Hermes Agent + vecmemori で日本語小説を企画・執筆するためのス�
 - **高解像度キャラクターシート** — 36項目の詳細テンプレート。ComfyUI 等の画像生成 AI との連携を前提とした設計
 - **親子レコード管理** — 章またぎの設定変化（成長・悪堕ち・所属変更）を強リレーションで追跡
 - **感情曲線を踏まえたプロットと執筆** — ドラマカーブの緩急に沿いアゲサゲ山場を意識したシナリオ構成を提案
-- **複数 LLM による推敲** — 論理・文体・時代考証・読者視点の 4 エージェント構成。異なる LLM を手動オーケストレーションし、単一モデルの偏向を排除
+- **複数 LLM による推敲** — 論理・文体・時代考証・読者視点の 4 エージェント構成。連動スキルhermes-fake-moaにより異なる LLM にてチェック、単一モデルの偏向を排除
 - **挿絵の画像生成支援** — GPT Image / Nano Banana 等に対応。シーン選定からプロンプト提案。 ComfyUI なら生成→ビジョンチェック含めHITL半自動化
 - **ジャンル不問** — ファンタジー、SF、ミステリ、恋愛、青春、歴史、ホラー etc.
 
@@ -32,6 +32,7 @@ Hermes Agent + vecmemori で日本語小説を企画・執筆するためのス�
 - [Hermes Agent](https://github.com/NousResearch/hermes-agent) v2.x
 - [vecmemori](https://github.com/iwaan10000vr/vecmemori) メモリプロバイダ（初期セットアップは `references/project-init.md` 参照）
 - **LLM プロバイダ** — Hermes Agent に最低 1 つ以上の LLM プロバイダが設定済みであること（OpenRouter, Nous Portal, Anthropic, OpenAI など）。推敲フェーズの MoA では複数プロバイダの併用を推奨（全エージェント異なる LLM が必須。詳細は `references/moa-manual-orchestration.md` 参照）
+- [hermes-fake-moa](https://github.com/kgmkm/hermes-fake-moa) hermes agent専用・複数 LLM に同一プロンプトを並列送信し、回答を比較するためのスキル
 
 ### インストール
 
@@ -40,14 +41,10 @@ Hermes Agent + vecmemori で日本語小説を企画・執筆するためのス�
 ```
 以下のGitHubリポジトリをスキルとしてインストールしてください：
 https://github.com/kgmkm/novel2hermes_jp
+https://github.com/kgmkm/hermes-fake-moa
 ```
 
-Hermes Agent がリポジトリの取得から配置までを自動で行います。手動で行う場合は以下：
-
-```bash
-git clone https://github.com/kgmkm/novel2hermes_jp.git
-ln -sf "$(pwd)/novel2hermes_jp" ~/.hermes/skills/novel2hermes_jp
-```
+スキルの安全性が気になる方は、上記に加え「外部通信の有無やセキュリティ懸念など安全性の評価をしてください」と付記してください。
 
 ### 起動
 
