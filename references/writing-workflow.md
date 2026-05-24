@@ -2,49 +2,54 @@
 
 ## 2-1. 執筆前チェックリスト
 
-執筆を始める前に、正規原典（.md ファイル）と vecmemori の両方から設定を再構築します。.md ファイルが正規原典であるため、最初に読み込みます。
+執筆を始める前に、vecmemori から設定を再構築します。vecmemori は AI の一次情報取得手段であり、.md ファイルの全読みは不要です。セッション初回のみ差分検出のために .md を確認します。
+
+**トークン効率**: vecmemori 検索（1回あたり約100〜200トークン）に対し、.md 全ファイル読込は数千トークンを消費します。毎セッションで全ファイルを読むとコンテキストが逼迫し、応答品質が低下します。vecmemori を優先し、.md は差分検出時のピンポイント読込に留めてください。
 
 ```python
-# Step 1: 正規原典（.md ファイル）の読み込み
-# 人間が直接編集している可能性があるため、必ず再読込する
-read_file("proposal.md")
-read_file("worldbuilding/概要.md")
-read_file("worldbuilding/地理.md")
-read_file("character/01-主人公_翔太.md")
-read_file("character/02-01-美咲_覚醒前.md")
-read_file("plot/第1章.md")
-# ... 必要なファイルをすべて読み込む
+# Step 1: 前回セッションの確認
+session_search(query="作品タイトル 執筆")       # 前回の中断箇所・決定事項
 
-# Step 2: シーン設計の再確認
-# plot/*.md のシーンテンプレート（場所・時間・視点・演出・キー台詞）を確認
-# 不足があればここで補完する
-# references/metaphor-guide.md, references/sensory-rotation.md を必要に応じて読み込む
+# Step 2: vecmemori で必要情報を高速取得（主要）
+fact_store(action="search", query="世界観 設定")   # 世界観
+fact_store(action="probe", entity="桜井美咲")      # キャラ情報（全件）
+fact_store(action="search", query="pid=001 sid=02") # 章またぎ子レコード
+fact_store(action="search", query="第1章 プロット 展開")  # プロット概要
+fact_store(action="search", query="伏線 未回収")   # 未回収伏線
 
-# Step 3: vecmemori で高速検索・補完
-session_search(query="作品タイトル 執筆")       # 前回セッション確認
-fact_store(action="search", query="世界観 設定")  # 世界観
-fact_store(action="probe", entity="桜井美咲")     # キャラ情報
-fact_store(action="search", query="pid=001 sid=02")  # 章またぎ子レコード
-fact_store(action="search", query="第1章 プロット 展開")  # プロット
+# Step 3: vecmemori の情報で不足があれば .md をピンポイント読込（必要な場合のみ）
+# 例: シーンテンプレートの詳細（場所・時間・視点・演出）が必要な場合
+# read_file("plot/第1章.md")  # ← 本当に必要なときだけ
+# 例: キャラの外見詳細が vecmemori で不明瞭な場合
+# read_file("character/02-01-美咲_覚醒前.md")
 
-# Step 4: 整合性チェック
-# .md と vecmemori の間に大きな乖離がないか確認
-# 乖離があればユーザに通知: .md の内容で vecmemori を更新しますか？
+# Step 4: 整合性チェック（セッション初回のみ差分検出）
+# .md が人間によって編集されている可能性をチェック
 fact_store(action="contradict", statement="確認したい命題")
-fact_store(action="search", query="伏線 未回収")
+
+# 乖離があればユーザに通知: 「.md に変更があります。vecmemori を更新しますか？」
 ```
+
+**.md を読むべきケース（例外）**:
+| ケース | 理由 |
+|--------|------|
+| vecmemori の検索結果が空／不足 | fact_store に未登録の可能性 |
+| シーンテンプレートの詳細が必要 | plot/*.md の完全なテンプレート（場所・時間・視点・演出・キー台詞）は vecmemori に要約のみ保存 |
+| セッション初回の差分検出 | 人間が .md を編集した可能性 |
+| fact_store(contradict) が矛盾を検出 | .md 正規原典と照合して真偽を判断 |
 
 ## 2-2. 執筆実行
 
-1. proposal.md、character/配下の全ファイル、plot/配下の全ファイルをすべて読み込んだ状態で起動
+1. vecmemori（fact_store）の検索結果を元に執筆を開始。.md ファイルの全読み込みは不要
 2. 指定された章（または続き）から執筆開始
-3. 各シーンは plot/ファイルの指示に忠実に、character/ファイルの設定に忠実に描写
-4. **文体: 三人称過去形を基本とする。キャラの口調は一貫させる**
-5. **五感ローテーション: シーンごとに視覚以外の感覚（聴覚・触覚・嗅覚）を 2 つ以上使う。不足時は 1〜2 行追記（references/sensory-rotation.md 参照）**
-6. **比喩: シーンごとに 1〜2 個の効果的な比喩。クリシェを避ける（references/metaphor-guide.md 参照）**
-7. ユーザが続きを書いた場合はその直後から執筆再開
-8. ユーザから意見を求められたら、作品のクオリティを最大化する方向で提案
-9. 執筆内容は novel/ 以下に保存
+3. 各シーンは vecmemori から取得したプロット指示に忠実に、キャラ設定に忠実に描写
+4. シーンテンプレートの詳細（場所・時間・視点・演出・キー台詞）が必要な場合は plot/*.md をピンポイント読込
+5. **文体: 三人称過去形を基本とする。キャラの口調は一貫させる**
+6. **五感ローテーション: シーンごとに視覚以外の感覚（聴覚・触覚・嗅覚）を 2 つ以上使う。不足時は 1〜2 行追記（references/sensory-rotation.md 参照）**
+7. **比喩: シーンごとに 1〜2 個の効果的な比喩。クリシェを避ける（references/metaphor-guide.md 参照）**
+8. ユーザが続きを書いた場合はその直後から執筆再開
+9. ユーザから意見を求められたら、作品のクオリティを最大化する方向で提案
+10. 執筆内容は novel/ 以下に保存
 
 ### 2-2-1. 執筆時時代考証チェック
 
@@ -92,10 +97,11 @@ patch(path="plot/第1章.md",
 ## 2-4. 推敲（revision-workflow.md 参照）
 
 執筆完了後、revision-workflow.md の Phase B に従って推敲を行う。
+推敲時の情報取得も vecmemori を優先し、.md 読込は必要最低限に留める。
 
 1. **対話チェーン検証** — 各台詞の論理的前提が物語中で確立されているか
 2. **指示語の射程チェック** — 「それ」「あれ」「あなたの」の指示対象を明示的に確認
-3. **世界制約チェック** — worldbuilding/制約リスト.md と照合し、時代錯誤語彙がないか確認
+3. **世界制約チェック** — `fact_store(search, query="世界制約 存在しない")` で制約リストを取得し、時代錯誤語彙がないか照合（.md の制約リスト読みは初回のみで十分）
 4. **章間事実整合性** — vecmemori `contradict` で章をまたぐ事実の矛盾を検出
 5. **五感ローテーション** — 各シーンで視覚以外の感覚が2つ以上使われているか
 
