@@ -11,6 +11,7 @@ Hermes Agent + vecmemori で日本語小説を企画・執筆するためのス�
 - **感情曲線を踏まえたプロットと執筆** — ドラマカーブの緩急に沿いアゲサゲ山場を意識したシナリオ構成を提案
 - **複数 LLM による推敲** — 論理・文体・時代考証・読者視点の 4 エージェント構成。連動スキルhermes-fake-moaにより異なる LLM にてチェック、単一モデルの偏向を排除
 - **挿絵の画像生成支援** — GPT Image / Nano Banana 等に対応。シーン選定からプロンプト提案。 ComfyUI なら生成→ビジョンチェック含めHITL半自動化
+- **縦書き小説用レイアウトでEPUB/PDFに出力** — 執筆したMarkdown原稿を、[novel2epub-jp](https://github.com/kgmkm/novel2epub-jp) でA6文庫判の縦書きPDFおよびEPUBに変換可能
 - **ジャンル不問** — ファンタジー、SF、ミステリ、恋愛、青春、歴史、ホラー etc.
 
 ## 作例
