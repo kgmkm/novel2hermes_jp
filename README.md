@@ -172,24 +172,7 @@ my-novel-project/
     └── moa_reader_v2.txt       ← 再推敲結果
 ```
 
-## 組版・出力
-
-執筆完了後のMarkdown原稿は、下流の `novel2epub-jp` スキルでPDF/EPUB化できます。
-
-
-
-- PDF: しっぽり明朝埋め込み、A6文庫判、章ヘッダ/ノンブル/挿絵制御
-
-- EPUB: 電書協EPUB3準拠
-
-
-
-詳細: [novel2epub-jp](https://github.com/kgmkm/novel2epub-jp)
-
-
-
 ---
-
 ## 注意
 
 ### AT YOUR OWN RISK: 自己責任で導入してください。
@@ -206,4 +189,15 @@ MIT License — 詳細は [LICENSE](LICENSE) を参照。
 - [vecmemori](https://github.com/iwaan10000vr/vecmemori) by iwaan10000vr
 - [ruri-v3](https://huggingface.co/cl-nagoya/ruri-v3-310m) by cl-nagoya
 - [葦澤かもめ](https://note.com/ashizawakamome) — 比喩表現などSKILL.md設計の参考
-- [jlreq-skill](https://github.com/kgmkm/jlreq-skill) — W3C JLREQ（日本語組版処理の要件）のAIエージェント向けリファレンス。出版フェーズ（Step β）の組版ルール参照に使用
+- [JLREQ（日本語組版処理の要件）](https://github.com/w3c/jlreq) by W3C — 日本語組版ルールの基盤資料
+
+## 組版・出力
+
+執筆完了後のMarkdown原稿は、下流の `novel2epub-jp` スキルでPDF/EPUB化できます。
+
+- PDF: しっぽり明朝埋め込み、A6文庫判、章ヘッダ/ノンブル/挿絵制御
+- EPUB: 電書協EPUB3準拠
+
+詳細: [novel2epub-jp](https://github.com/kgmkm/novel2epub-jp)
+
+組版ルールの詳細参照: [jlreq-skill](https://github.com/kgmkm/jlreq-skill) — W3C JLREQをAIエージェント向けに章ごとに構造化したリファレンス。行頭禁則・縦中横・ルビ処理等のルールを確認できます。
