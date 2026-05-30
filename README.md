@@ -33,6 +33,7 @@ Hermes Agent + vecmemori で日本語小説を企画・執筆するためのス�
 - [vecmemori](https://github.com/iwaan10000vr/vecmemori) メモリプロバイダ（初期セットアップは `references/project-init.md` 参照）
 - **LLM プロバイダ** — Hermes Agent に最低 1 つ以上の LLM プロバイダが設定済みであること（OpenRouter, Nous Portal, Anthropic, OpenAI など）。推敲フェーズの MoA では複数プロバイダの併用を推奨（全エージェント異なる LLM が必須。詳細は `references/moa-manual-orchestration.md` 参照）
 - [hermes-fake-moa](https://github.com/kgmkm/hermes-fake-moa) hermes agent専用・複数 LLM に同一プロンプトを並列送信し、回答を比較するためのスキル
+- [novel2epub-jp](https://github.com/kgmkm/novel2epub-jp) Markdown小説 → A6縦書きPDF/EPUB変換スキル。出版フェーズ（Step β）で使用
 
 ### インストール
 
@@ -170,6 +171,24 @@ my-novel-project/
     ├── moa_reader.txt          ← MoA 読者視点エージェント出力
     └── moa_reader_v2.txt       ← 再推敲結果
 ```
+
+## 組版・出力
+
+執筆完了後のMarkdown原稿は、下流の `novel2epub-jp` スキルでPDF/EPUB化できます。
+
+
+
+- PDF: しっぽり明朝埋め込み、A6文庫判、章ヘッダ/ノンブル/挿絵制御
+
+- EPUB: 電書協EPUB3準拠
+
+
+
+詳細: [novel2epub-jp](https://github.com/kgmkm/novel2epub-jp)
+
+
+
+---
 
 ## 注意
 
