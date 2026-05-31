@@ -93,6 +93,14 @@ Layer 4: session_search
 
 > **注意**: Step β は **novel2epub-jp** スキルが担当する。SKILL.md 内では参照のみとし、組版の詳細はそちらに委譲する。
 
+### 企画時のVFM確認
+
+企画フェーズで、ユーザーに以下の点を確認する:
+
+1. **最終出力形式** — EPUB/PDF化するか、Web公開のみか
+2. **VFMフォーマットの使用** — EPUB/PDF化を予定する場合、**VFM (Vivliostyle Flavored Markdown) 記法**で執筆することを推奨。ルビ(`{漢字|よみ}`)や改ページ(`===`)をMarkdown内で指示でき、pixiv・カクヨム等の独自記法からの変換も容易
+3. **VFM記法の参照** — 記法に不明点があれば `skill_view(name='vfm-syntax', file_path='references/vfm-syntax.md')` で詳細ガイドを読み込む
+
 ## 使用方法
 
 | 指示 | 動作 |
@@ -168,6 +176,12 @@ Layer 4: session_search
 | references/illustration-guide.md | 挿絵生成ガイド（ComfyUI 連携） | 挿絵生成時 |
 | references/fact-store-reference.md | vecmemori 操作リファレンス・全アクション表 | fact_store 操作時 |
 | references/project-init.md | vecmemori セットアップ手順 + プロジェクト初期化 | 初回セットアップ時 |
+
+## 関連スキル
+
+- [vfm-syntax](https://github.com/kgmkm/vfm-syntax) — VFM記法リファレンス。企画時にVFMフォーマットの確認が必要な場合に参照
+- [novel2epub-jp](https://github.com/kgmkm/novel2epub-jp) — Markdown原稿→A6縦書きPDF/EPUB変換（出版フェーズ Step β）
+- [jlreq-skill](https://github.com/kgmkm/jlreq-skill) — W3C日本語組版ルール（AIエージェント向けリファレンス）
 
 ## 注意点と確認リスト
 
