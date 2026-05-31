@@ -1,7 +1,7 @@
 ---
 name: novel2hermes_jp
 description: Use when the user wants to plan, write, or manage a Japanese novel project with Hermes Agent + vecmemori memory. Covers fantasy, SF, mystery, romance, and all genres. Load this skill when the user mentions novel writing, character design, worldbuilding, plot planning, or wants to continue a novel project.
-version: 3.0.0
+version: 3.1.0
 tags: [novel, writing, creative, japanese, vecmemori, fiction]
 ---
 
