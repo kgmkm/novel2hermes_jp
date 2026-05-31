@@ -99,7 +99,7 @@ Layer 4: session_search
 
 1. **最終出力形式** — EPUB/PDF化するか、Web公開のみか
 2. **VFMフォーマットの使用** — EPUB/PDF化を予定する場合、**VFM (Vivliostyle Flavored Markdown) 記法**で執筆することを推奨。ルビ(`{漢字|よみ}`)や改ページ(`===`)をMarkdown内で指示でき、pixiv・カクヨム等の独自記法からの変換も容易
-3. **VFM記法の参照** — 記法に不明点があれば `skill_view(name='vfm-syntax', file_path='references/vfm-syntax.md')` で詳細ガイドを読み込む
+3. **VFM記法の参照** — 記法に不明点があれば [vfm-syntax](https://github.com/kgmkm/vfm-syntax) の `references/vfm-syntax.md` を参照
 
 ## 使用方法
 
