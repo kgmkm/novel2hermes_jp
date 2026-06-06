@@ -84,12 +84,13 @@ Layer 4: session_search
 
 ### 出版フェーズ
 
-小説執筆後、以下の2ステップで電子書籍化する。
+小説執筆後、以下の3ステップで電子書籍化・投稿用変換を行う。
 
 | Step | 内容 | 詳細 |
 |------|------|------|
 | α | 画像生成 | 挿絵・表紙の生成（ComfyUI または外部API・外部サービス）。詳細は [illustration-guide.md](references/illustration-guide.md) |
 | β | EPUB/PDF 組版 | Markdown原稿を縦書き電子書籍に変換。**[novel2epub-jp](https://github.com/kgmkm/novel2epub-jp)** スキルを使用（A6文庫判、しっぽり明朝埋め込み、JLREQ準拠） |
+| γ | pixiv 小説投稿用変換 | VFM .md 原稿を pixiv 小説タグ形式に変換。**[vfm-to-pixiv-workflow.md](references/vfm-to-pixiv-workflow.md)** を参照 |
 
 > **注意**: Step β は **novel2epub-jp** スキルが担当する。SKILL.md 内では参照のみとし、組版の詳細はそちらに委譲する。
 
@@ -176,6 +177,7 @@ Layer 4: session_search
 | references/illustration-guide.md | 挿絵生成ガイド（ComfyUI 連携） | 挿絵生成時 |
 | references/fact-store-reference.md | vecmemori 操作リファレンス・全アクション表 | fact_store 操作時 |
 | references/project-init.md | vecmemori セットアップ手順 + プロジェクト初期化 | 初回セットアップ時 |
+| references/vfm-to-pixiv-workflow.md | pixiv小説投稿用変換ワークフロー（Step γ） | γ 実行時 |
 
 ## 関連スキル
 
