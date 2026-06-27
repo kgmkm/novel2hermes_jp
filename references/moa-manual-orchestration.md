@@ -1,4 +1,4 @@
-# MoA手動オーケストレーション — 小説推敲（整合性検証 + 読者視点評価）
+# 横並び比較手動オーケストレーション — 小説推敲（整合性検証 + 読者視点評価）
 
 **モデル管理・並列実行・例外処理・プロバイダ固有の注意点は [hermes-fake-moa](https://github.com/kgmkm/hermes-fake-moa) に集約されています。** 以下は小説推敲に特化した内容のみを記載します。
 
@@ -20,7 +20,7 @@ hermes chat -q "プロンプト" -m "モデル名" --provider プロバイダ名
 
 ## 4エージェント構成
 
-各エージェントに**異なるLLM**を割り当てること（同一モデルでの複数視点はMoAの意味を損なう）。
+各エージェントに**異なるLLM**を割り当てること（同一モデルでの複数視点は比較の意味を損なう）。
 
 | # | 視点 | 役割 | チェック内容 |
 |---|------|------|-------------|
@@ -28,6 +28,33 @@ hermes chat -q "プロンプト" -m "モデル名" --provider プロバイダ名
 | 2 | **文体・表現技法** | 比喩・五感・リズム・文体一貫性 | クリシェ、五感充足、説明的モノローグ、文長バランス |
 | 3 | **時代考証・語彙** | 時代語彙・風俗検証 | 外来語、戦後俗語、度量衡、学術用語 |
 | 4 | **読者視点評価** | 没入感・感情曲線・余韻評価 | 説明不足/過剰、共感阻害、幕切れ強度、希望/喪失バランス |
+
+## 推奨プロバイダ（2026年6月時点）
+
+| プロバイダ | 認証 | 特徴 | 備考 |
+|-----------|------|------|------|
+| **OpenCode Go** | なし | $10/月定額・15モデル | コスト最優先。glm-5.2/deepseek-v4-pro/kimi-k2.6/minimax-m3等 |
+| **Nous Portal** | OAuth | 250+モデル・無料枠あり | モデル種類最多。deepseek/glm/qwen等 |
+| **OpenRouter** | API Key | 350+モデル・従量課 | Anthropic/OpenAI/Google等への汎用アクセス |
+| **Google AI Studio** | API Key | 35モデル・無料枠 | Gemini シリーズ |
+| **xAI / Grok** | API Key | 8モデル・サブスク | Grok シリーズ |
+| **Ollama Cloud** | API Key | 39モデル | |
+| **HuggingFace** | API Key | 128モデル | Inference Providers |
+| **Anthropic** | OAuth/API Key | Claude シリーズ | `hermes auth add anthropic` で Claude Code 認証または API Key を追加可能。Claude Code（Pro/Max）アカウントを持っていれば OAuth ログインで利用可能 |
+| **OpenAI Codex** | OAuth | GPT/o3/o4 シリーズ | ChatGPT Plus/Pro 要請 |
+
+### 注意・非推奨
+
+- **NVIDIA NIM** — 無料枠だとレスポンスがかなり遅いケースがある
+- **LM Studio** — 大多数の環境だと現状ローカルLLMは性能が厳しすぎる
+- **GitHub Copilot** — 価格が厳しくなってしまいユーザ離脱が多い
+
+### モデル選択の指針
+
+- **常に最新リストを取得**: `python3 scripts/list-models.py > models.md` で全プロバイダの最新モデル一覧を生成
+- **定額プロバイダ優先**: OpenCode Go の flagship/midship モデルは月額固定でコスト懸念なし
+- **無料枠活用**: Nous Portal / Google AI Studio / HuggingFace は無料枠が広い
+- **コスト有料でも性能重視**: Anthropic Claude / OpenAI GPT は推敲品質が高いが、OpenRouter 経由で従量課金
 
 ## エージェント指示テンプレート
 
@@ -121,7 +148,7 @@ hermes chat -q "プロンプト" -m "モデル名" --provider プロバイダ名
 
 ---
 
-## 合議集計
+## 横並び比較集計
 
 全エージェント完了後：
 

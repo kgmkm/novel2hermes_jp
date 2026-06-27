@@ -82,7 +82,7 @@ hermes tools list
 | `browser` | 参考資料サイトの閲覧（デフォルト有効） |
 | `image_gen` | ComfyUI 連携による挿絵・表紙生成（デフォルト有効） |
 
-> **注意**: `moa` ツールはインストール不要です。小説推敲の MoA は `hermes chat -q -m MODEL --provider PROVIDER` による手動オーケストレーションを使用します（`references/moa-manual-orchestration.md` 参照）。
+> **注意**: ビルトインMoA（集約型）は小説推敲には不適です。各エージェントの独立回答を比較するため `hermes-fake-moa` を使用します（`references/moa-manual-orchestration.md` 参照）。
 
 ---
 

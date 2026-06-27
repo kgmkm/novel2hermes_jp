@@ -9,7 +9,7 @@ Hermes Agent + vecmemori で日本語小説を企画・執筆するためのス�
 - **高解像度キャラクターシート** — 36項目の詳細テンプレート。ComfyUI 等の画像生成 AI との連携を前提とした設計
 - **親子レコード管理** — 章またぎの設定変化（成長・悪堕ち・所属変更）を強リレーションで追跡
 - **感情曲線を踏まえたプロットと執筆** — ドラマカーブの緩急に沿いアゲサゲ山場を意識したシナリオ構成を提案
-- **複数 LLM による推敲** — 論理・文体・時代考証・読者視点の 4 エージェント構成。連動スキルhermes-fake-moaにより異なる LLM にてチェック、単一モデルの偏向を排除
+- **複数 LLM による推敲** — 論理・文体・時代考証・読者視点の 4 エージェント構成。連動スキル hermes-fake-moa により異なる LLM の生回答を横並び比較し、単一モデルの偏向を排除
 - **挿絵の画像生成支援** — GPT Image / Nano Banana 等に対応。シーン選定からプロンプト提案。 ComfyUI なら生成→ビジョンチェック含めHITL半自動化
 - **縦書き小説用レイアウトでEPUB/PDFに出力** — 執筆したMarkdown原稿を、[novel2epub-jp](https://github.com/kgmkm/novel2epub-jp) でA6文庫判の縦書きPDFおよびEPUBに変換可能
 - **ジャンル不問** — ファンタジー、SF、ミステリ、恋愛、青春、歴史、ホラー etc.
@@ -32,8 +32,8 @@ Hermes Agent + vecmemori で日本語小説を企画・執筆するためのス�
 
 - [Hermes Agent](https://github.com/NousResearch/hermes-agent) v2.x
 - [vecmemori](https://github.com/iwaan10000vr/vecmemori) メモリプロバイダ（初期セットアップは `references/project-init.md` 参照）
-- **LLM プロバイダ** — Hermes Agent に最低 1 つ以上の LLM プロバイダが設定済みであること（OpenRouter, Nous Portal, Anthropic, OpenAI など）。推敲フェーズの MoA では複数プロバイダの併用を推奨（全エージェント異なる LLM が必須。詳細は `references/moa-manual-orchestration.md` 参照）
-- [hermes-fake-moa](https://github.com/kgmkm/hermes-fake-moa) hermes agent専用・複数 LLM に同一プロンプトを並列送信し、回答を比較するためのスキル
+- **LLM プロバイダ** — Hermes Agent に最低 1 つ以上の LLM プロバイダが設定済みであること（OpenCode Go, OpenRouter, Nous Portal, Anthropic 等）。推敲フェーズでは複数プロバイダの併用を推奨（全エージェント異なる LLM が必須。詳細は `references/moa-manual-orchestration.md` 参照）
+- [hermes-fake-moa](https://github.com/kgmkm/hermes-fake-moa) hermes agent専用・複数 LLM の生回答を横並び比較するためのスキル
 - [novel2epub-jp](https://github.com/kgmkm/novel2epub-jp) Markdown小説 → A6縦書きPDF/EPUB変換スキル。出版フェーズ（Step β）で使用
 
 ### インストール
@@ -99,7 +99,7 @@ AIは小説設定を作ったり変えたりする際、Aを作成・更新し�
 
 もしもあなたがXプレミアム以上またはSuperGrokを契約しているなら、`hermes agentツールのx_searchを有効化してください。有料プラン契約しています`と伝え、Xを検索させるのも効果的。ついでに予算がアレなら費用対効果の高い、みたいな添え書きもつけるといいかもね。
 
-このスキルの`references/moa-manual-orchestration.md` に、オススメのLLMプロバイダを紹介しておいたけど、それ2026/05時点のものだし、
+このスキルの`references/moa-manual-orchestration.md` に、オススメのLLMプロバイダを紹介しています。また、hermes-fake-moa の `list-models.py` を実行すれば、常に最新の利用可能モデル一覧を取得できます（`python3 scripts/list-models.py > models.md`）。
 
 ### hermes agentでいろんなLLMを使えるようにしよう！
 この小説執筆システムは、多くのLLMが使えれば使えるほど性能が上がります。
@@ -115,8 +115,8 @@ novel2hermes_jp/
     ├── project-init.md               ← 環境セットアップ（vecmemori + ツール有効化）
     ├── planning-workflow.md          ← 企画フェーズ詳細（世界観→キャラ→プロット）
     ├── writing-workflow.md           ← 執筆フェーズ詳細（ルール・時代考証・品質基準）
-    ├── revision-workflow.md          ← 推敲 3 フェーズ + MoA オーケストレーション
-    ├── moa-manual-orchestration.md   ← MoA 推奨プロバイダ + 実行コマンド
+    ├── revision-workflow.md          ← 推敲 3 フェーズ + 横並び比較オーケストレーション
+    ├── moa-manual-orchestration.md   ← 横並び比較 推奨プロバイダ + 実行コマンド
     ├── illustration-guide.md         ← 挿絵生成ガイド（ComfyUI / 代替ツール）
     ├── character-template.md         ← キャラ詳細仕様書テンプレート
     ├── fact-store-reference.md       ← vecmemori 操作リファレンス
@@ -167,9 +167,9 @@ my-novel-project/
 ├── workflow1.json             ← ComfyUI ワークフロー定義（再現用）
 │
 └── .hermes/                   ← Hermes Agent 内部データ（推敲結果など）
-    ├── moa_logic.txt           ← MoA 論理検証エージェント出力
-    ├── moa_era.txt             ← MoA 時代考証エージェント出力
-    ├── moa_reader.txt          ← MoA 読者視点エージェント出力
+    ├── moa_logic.txt           ← 横並び比較 論理検証エージェント出力
+    ├── moa_era.txt             ← 横並び比較 時代考証エージェント出力
+    ├── moa_reader.txt          ← 横並び比較 読者視点エージェント出力
     └── moa_reader_v2.txt       ← 再推敲結果
 ```
 

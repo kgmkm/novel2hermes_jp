@@ -117,7 +117,7 @@ Layer 4: session_search
 | 「前回どこまで？」 | `session_search` |
 | 「.md を編集した。vecmemori に反映して」 | .md 再読込 → fact_store 同期 |
 | 「推敲して」 | revision-workflow.md に従い Phase B/C を実行 |
-| 「MoA でチェックして」 | moa-manual-orchestration.md に従い 4 エージェント合議 |
+| 「MoA でチェックして」 | moa-manual-orchestration.md に従い 4 エージェント横並び比較（集約なし・人間が判断） |
 | 「vecmemori のセットアップ」 | project-init.md を読み込む |
 
 ## ジャンル別ガイド（概略）
@@ -131,7 +131,7 @@ Layer 4: session_search
 
 ## MoA Quick Reference（推敲）
 
-推敲は 4 つの異なる視点を持つ LLM による合議（Mixture of Agents）が有効。
+推敲は 4 つの異なる視点を持つ LLM による横並び比較（集約なし・人間が判断）が有効。
 **モデル一覧の取得・選択・並列実行には `hermes-fake-moa` スキルを使用する。**
 手動オーケストレーションの詳細は `references/moa-manual-orchestration.md` を参照。
 
